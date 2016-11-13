@@ -1,0 +1,63 @@
+urxvt.geometry: 72x24
+urxvt.saveLines: 65535
+urxvt.scrollBar: false
+urxvt.termName: rxvt
+
+urxvt.iconFile: /usr/share/icons/Humanity/apps/128/gnome-terminal.svg
+urxvt.font: xft:ricty:size=14:antialias=true
+urxvt.letterSpace: -8
+URxvt*imLocale:  en_US.UTF-8
+
+! color
+URxvt*termName: rxvt-256color
+URxvt*xftAntialias: true
+URxvt*background: #3f3f3f
+URxvt*foreground: #dcdccc
+URxvt*cursorColor: #aaaaaa
+nURxvt*colorUL: #366060
+URxvt*underlineColor: #dfaf8f
+URxvt*color0: #3f3f3f
+URxvt*color1: #cc9393
+URxvt*color2: #7f9f7f
+URxvt*color3: #d0bf8f
+URxvt*color4: #6ca0a3
+URxvt*color5: #dc8cc3
+URxvt*color6: #93e0e3
+URxvt*color7: #dcdccc
+URxvt*color8: #000000
+URxvt*color9: #dca3a3
+URxvt*color10: #bfebbf
+URxvt*color11: #f0dfaf
+URxvt*color12: #8cd0d3
+URxvt*color13: #dc8cc3
+URxvt*color14: #93e0e3
+URxvt*color15: #ffffff
+
+urxvt.depth: 32
+
+urxvt*shading: 20
+URxvt*inheritPixmap: true
+
+
+! ! input with IM at cursor position
+urxvt.preeditType: OverTheSpot
+
+! ! clipboard
+! ! $ urxvt --perl-lib $HOME/.urxvt/urxvt-perls
+urxvt.perl-lib: /home/riktor/.urxvt.d/
+urxvt.perl-ext-common: urxvt-xsel, tabbedex
+urxvt.keysym.C-C: perl:urxvt-xsel:copy
+urxvt.keysym.C-V: perl:urxvt-xsel:paste
+urxvt.keysym.M-C-v: perl:urxvt-xsel:paste_escaped
+urxvt.keysym.M-f: perl:keyboard-select:activate
+urxvt.keysym.M-s: perl:keyboard-select:search
+
+URxvt.keysym.M-t:           perl:tabbedex:new_tab
+URxvt.keysym.M-n:           perl:tabbedex:next_tab
+URxvt.keysym.M-p:           perl:tabbedex:prev_tab
+URxvt.tabbed.no-tabbedex-keys: true
+URxvt.tabbed.not-consumable-keys: 0xff22, 0xff23, 0xff2a
+
+URxvt.perl-ext-common: default,matcher
+URxvt.url-launcher: /usr/bin/chromium
+URxvt.matcher.button: 1

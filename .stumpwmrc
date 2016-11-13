@@ -1,0 +1,154 @@
+
+(in-package :stumpwm)
+
+
+
+;;
+;; settings
+;;
+(set-focus-color "palegreen3")
+(set-unfocus-color "black")
+(set-win-bg-color "black")
+(set-fg-color "white")
+(set-bg-color "black")
+(set-border-color "Blue")
+(set-normal-gravity :center)
+(set-prefix-key (kbd "s-q"))
+(setf *startup-message* "Hello, riktor!"
+      *input-window-gravity* :center
+      *time-format-string-default* "%Y/%m/%d(%a) %H:%M"
+      *message-window-timer* 1
+      *mouse-focus-policy* :sloppy
+      *normal-border-width* 0
+      *maxsize-border-width* 0
+      *transient-border-width* 1
+      *window-border-style* :thin
+      *shell-program* "/bin/zsh")
+
+;; (set-font "-misc-inconsolata-*-*-*-*-*-*-*-*-*-*-*-*")
+
+
+(setf *modifiers* 
+      #S(modifiers 
+	 :meta (:mod-1) 
+	 :alt nil 
+	 :hyper (:mod-3)
+	 :super (:mod-4) 
+	 :numlock (:mod-2)))
+
+;;
+
+
+
+;;
+;; mode-line
+;;
+
+(setf *mode-line-foreground-color* "darkgray")
+
+;; modeline border color
+(setf *mode-line-border-color* "darkgray")
+
+(setf *screen-mode-line-format*
+      (list "%g | "
+	    '(:eval (run-shell-command "date" t))))
+
+;; (push (lambda (s b x y)
+;; 	(declare (ignore s x y))
+;; 	(case b
+;; 	  (4 (amixer-master-1-))
+;; 	  (5 (amixer-master-1+))))
+;;             stumpwm:*mode-line-click-hook*)
+
+
+
+
+
+;;
+;; commands
+;;
+(defcommand search-google (query)
+  ((:string "Enter query: "))	    
+  (run-or-raise (format nil "chromium http://www.google.com/search?q=~a" query) '(:class "chrome")))
+
+(defcommand remove-split-and-focus-current-window () ()
+	    (let ((num (window-number (current-window))))
+	      (remove-split)
+	      (select-window-by-number num)))
+
+
+(defcommand chrome ()()
+	    "run chromium-browser"
+	    (run-or-raise "chromium" '(:class "chrome")))
+(defcommand ichrome ()()
+	    "run chromium-browser"
+	    (run-or-raise "chromium --incognito about:blank" '(:class "chrome")))
+(defcommand reload ()()
+	    "reload rc file"
+	    (stumpwm::load-rc-file))
+(defcommand xlock ()()
+	    "exec xlock"
+	    (run-shell-command "xlock -mode random"))
+
+;;
+;; groups
+;;
+
+;; (define-key *top-map* (kbd "M-p") "gprev")
+;; (define-key *top-map* (kbd "M-n") "gnext")
+
+
+
+
+(loop
+   for i from 1 below 9
+   for key = (format nil "s-~a" i)
+   do
+     (undefine-key *top-map* (kbd key))
+     (define-key *top-map* (kbd key) (format nil "gnew ~a" (if (= i 1)
+							       "Default"
+							       i))))
+
+
+;;
+;; keys
+;;
+
+
+
+(define-key *top-map* (kbd "s-TAB") "next")
+(define-key *top-map* (kbd "M-TAB") "prev")
+(define-key *top-map* (kbd "s-a") "next")
+(define-key *top-map* (kbd "s-A") "prev")
+
+
+
+
+(define-key *top-map* (kbd "s-Q") "restart-hard")
+(define-key *top-map* (kbd "s-h") "hsplit")
+;; (define-key *top-map* (kbd "s-j") "vsplit")
+
+(define-key *top-map* (kbd "s-j") "gmove")
+(define-key *top-map* (kbd "s-J") "gmove-and-follow")
+
+(define-key *top-map* (kbd "s-r") "remove-split-and-focus-current-window")
+(define-key *top-map* (kbd "s-e") "exec")
+(define-key *top-map* (kbd "s-f") "colon")
+(define-key *top-map* (kbd "s-w") "delete-window")
+
+(define-key *top-map* (kbd "s-t") "exec gnome-terminal")
+(define-key *top-map* (kbd "s-y") "exec thunar")
+
+
+
+(mode-line)
+
+
+
+(run-shell-command "xmodmap ~/.xmodmap")
+(run-shell-command "ibus-daemon -drx")
+(run-shell-command "sh ~/.xinitrc")
+(run-shell-command "xrandr --output eDP1 --mode 1920x1080")
+(run-shell-command "feh --bg-scale ~/Pictures/LkliLfl.jpg") 
+
+
